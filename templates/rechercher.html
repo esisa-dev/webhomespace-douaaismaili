@@ -1,0 +1,39 @@
+
+<html>
+
+<center>
+
+    <h1> Welcome to Your Home Space</h1>
+    <nav>
+
+        <a href="/Files">Files</a> | 
+        <a href="/Dirs">Dirs</a> | 
+        <a href="/Space">Space</a> | 
+        
+        <a href></a>
+        <a href="/logout">Logout</a> | 
+
+    </nav>
+    <form  action="/rechercher" method="get">
+        <input type="text" name="recherche" value="{{ value }}"/>
+        <input type="submit" value="Rechercher"/>
+        
+    </form>
+    <table>
+    <tr><td>Dossiers</td> <td>Date de modification</td> <td>Taille</td></tr>
+    {% for d in liste %}
+        
+    <tr>
+        <td> <a style="color: blueviolet"; href=" {{ d[0] }} "> {{ d[0] }} </a></td>
+         <td> {{ d[1] }}  {{ d[2] }}  {{ d[3] }} a {{ d[4] }} </td> 
+         <td>            {{ d[5] }} </td>
+    </tr>
+
+    {% endfor %}
+    
+    </table>
+<ul>
+  
+</ul>
+</center>
+</html>
