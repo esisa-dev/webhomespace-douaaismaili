@@ -22,3 +22,5 @@
 2023-04-20 06:57:57,779 INFO controller Bienvenue
 2023-04-20 06:59:15,568 INFO controller Au revoir
 2023-04-20 06:59:17,562 INFO controller Bienvenue
+2023-04-20 07:49:36,725 INFO controller Bienvenue
+2023-04-20 07:51:55,378 INFO controller Au revoir

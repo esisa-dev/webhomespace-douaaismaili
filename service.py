@@ -89,6 +89,10 @@ class UserService:
         for l in f.readlines():
             c=l[0:len(l)-1] 
         return c
-U=UserService('/home/douaa')
-print(U.filesCount())
-print(U.dirsCount())
+    def space(self):
+        l=[]
+        f=os.popen(f'du -sh {self.oldUrl}|tr -s " " " " | cut -f1')
+        for l in f.readlines():
+            c=l[0:len(l)-1] 
+        
+              
