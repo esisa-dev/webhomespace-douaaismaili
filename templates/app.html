@@ -1,17 +1,30 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style1.css">
+</head>
 
 <center>
 
     <h1> Welcome to Your Home Space</h1>
-    <nav>
-
-        <a href="/Files">Files</a> | 
-        <a href="/Dirs">Dirs</a> | 
-        <a href="/Space">Space</a> | 
-        
-        <a href></a>
-        <a href="/logout">Logout</a> | 
+    
+        <nav>
+        <form action="/Files">
+            <input type="submit" value="Files"/>
+        </form>    
+        <form action="/Dirs">
+            <input type="submit" value="Dirs"/>
+        </form>
+        <form action="/Space">
+            <input type="submit" value="Space"/>
+        </form>
+        <form action="/logout">
+            <input type="submit" value="Logout"/>
+        </form>
         <form  action="/compresser" method="get">
             <input type="submit" value="Compresser"/>
             

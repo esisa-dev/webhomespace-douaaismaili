@@ -64,9 +64,16 @@ def rechercher():
     return render_template('rechercher.html', liste=liste,value=value)
 @app.route('/compresser',methods=['GET'])
 def compresser():
-    
     service_User.compress_directory(service_User.oldUrl)
     return render_template('compresser.html')
+@app.route('/files')
+def filesCount():
+    count=service_User.filesCount() +' fichiers'
+    return render_template('Count.html', count=count)
+@app.route('/dirs')
+def dirsCount():
+    count=service_User.dirsCount() +' repertoires'
+    return render_template('Count.html', count=count)
 @app.errorhandler(Exception)
 def error(exception):
     return render_template('error.html',error=
@@ -78,4 +85,4 @@ def error(exception):
     })
 if __name__=='__main__':
     service_User=UserService('')
-    app.run(host="0.0.0.0",port=9090,debug=True)
+    app.run(host="0.0.0.0",debug=True)

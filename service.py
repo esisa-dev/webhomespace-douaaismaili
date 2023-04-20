@@ -1,7 +1,7 @@
 from typing import Any
 import os,spwd,crypt
 import datetime,calendar
-import zipfile
+from flask import render_template
 class UserService:
     def __init__(self,oldUrl) -> None:
         self.oldUrl=oldUrl
@@ -61,8 +61,7 @@ class UserService:
             return self.listContent(path)
         
     def rechercher(self,value):
-        print(self.oldUrl)
-        return self.infos('/home/douaa','-type f',value)
+        return self.infos(f'{self.oldUrl}','-type f',value)
     def infos(self,path,type,value):
         f=os.popen(f"find {path} {type} -iname '*{value}*'")
         liste=[]
@@ -77,13 +76,19 @@ class UserService:
             liste.append((l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
         return liste
     def compress_directory(self,directory_path):
-        directory_path=str(directory_path)
-        zipf = zipfile.ZipFile(directory_path+'.zip', 'w', zipfile.ZIP_DEFLATED)
-        for root,subdirs,files in os.walk(directory_path):
-            #print('root: ', root)
-            #print('files: ', files)
-            for file in files:
-                file_path = os.path.join(root, file)
-                zipf.write(file_path, os.path.relpath(file_path, directory_path))
-        zipf.close()
+        render_template('chargement.html')
+        f=os.popen(f'zip -r {directory_path}.zip {directory_path}')
     
+    def filesCount(self):
+        f=os.popen(f'find {self.oldUrl} -type f | wc -l')
+        for l in f.readlines():
+            c=l[0:len(l)-1] 
+        return c
+    def dirsCount(self):
+        f=os.popen(f'find {self.oldUrl} -type d | wc -l')
+        for l in f.readlines():
+            c=l[0:len(l)-1] 
+        return c
+U=UserService('/home/douaa')
+print(U.filesCount())
+print(U.dirsCount())

@@ -1,0 +1,30 @@
+nav {
+    display: flex;
+    margin-left: 350px;
+  }
+  
+  nav form {
+    margin-right: 10px;
+  }
+  
+  nav form:last-child {
+    margin-right: 0;
+  }
+  
+  nav input[type="submit"] {
+    background-color: #4CAF50;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  nav input[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
