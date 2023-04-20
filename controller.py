@@ -7,7 +7,7 @@ from flask import(
     url_for,
 
 )
-import logging
+import logging,os,subprocess
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from service import UserService
@@ -24,7 +24,6 @@ def generate_key(login):
 app.secret_key='1234'
 @app.route('/')
 def index():
-    service_User.clear()
     return render_template('login.html')
 @app.route('/login',methods=['POST'])
 def login():
@@ -62,9 +61,17 @@ def rechercher():
     value=request.args.get('recherche')
     liste=service_User.rechercher(value)
     return render_template('rechercher.html', liste=liste,value=value)
+
+def chargement():
+    return render_template('chargement.html')
 @app.route('/compresser',methods=['GET'])
 def compresser():
-    service_User.compress_directory(service_User.oldUrl)
+    commande=f'sudo zip -r {service_User.oldUrl}.zip {service_User.oldUrl}'
+    process = subprocess.Popen(commande.split(), stdout=subprocess.PIPE)
+    chargement()
+    while process.poll() is None:
+        s=0
+    output, error = process.communicate()
     return render_template('compresser.html')
 @app.route('/files')
 def filesCount():
@@ -74,6 +81,10 @@ def filesCount():
 def dirsCount():
     count=service_User.dirsCount() +' repertoires'
     return render_template('Count.html', count=count)
+@app.route('/space')
+def space():
+    liste=service_User.space()
+    return render_template('Count.html', liste=liste)
 @app.errorhandler(Exception)
 def error(exception):
     return render_template('error.html',error=

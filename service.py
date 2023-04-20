@@ -1,7 +1,10 @@
 from typing import Any
 import os,spwd,crypt
 import datetime,calendar
+import matplotlib.pyplot as plt
+import io,base64
 from flask import render_template
+
 class UserService:
     def __init__(self,oldUrl) -> None:
         self.oldUrl=oldUrl
@@ -20,27 +23,19 @@ class UserService:
                 return login + " doesn't exist"
         else:
             return login + " doesn't exist"
-    def clear(self):
-        file1=open('/home/douaa/github-classroom/esisa-dev/webhomespace-douaaismaili/templates/app.html','w')
-        file2=open('/home/douaa/github-classroom/esisa-dev/webhomespace-douaaismaili/templates/appBackup.html','r')
-        contenu=file2.read()
-        file2.close()
-        file1.write(contenu)
     def listContent(self,path):
-        f=os.popen(f'ls -l {path}|tr -s " " " "|cut -d " " -f9-')
+        f=os.popen(f'sudo ls -l {path}|tr -s " " " "|cut -d " " -f9-')
         liste=[]
         f.readline()
         for l in f.readlines():
-            st=os.stat(f'{path}/{l[0:len(l)-1]}')
-            taille=str(st.st_size)
-            jour=datetime.datetime.fromtimestamp(st.st_mtime).day
-            mois=calendar.month_name[datetime.datetime.fromtimestamp(st.st_mtime).month]
-            annee=datetime.datetime.fromtimestamp(st.st_mtime).year
-            time=(str(datetime.datetime.fromtimestamp(st.st_mtime).time()).split('.')[0]).split(':')[:-1]
-            liste.append((f'{path}/{l[0:len(l)-1]}',l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
-        print('OLDURL: ',self.oldUrl)
-        if(liste==[]):
-            print('vide')
+            if(os.path.isdir(f'{path}/{l[0:len(l)-1]}')):
+                st=os.stat(f'{path}/{l[0:len(l)-1]}')
+                taille=str(st.st_size)
+                jour=datetime.datetime.fromtimestamp(st.st_mtime).day
+                mois=calendar.month_name[datetime.datetime.fromtimestamp(st.st_mtime).month]
+                annee=datetime.datetime.fromtimestamp(st.st_mtime).year
+                time=(str(datetime.datetime.fromtimestamp(st.st_mtime).time()).split('.')[0]).split(':')[:-1]
+                liste.append((f'{path}/{l[0:len(l)-1]}',l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
         return liste
     def printFile(self,path):
         f=open(path,'r')
@@ -50,7 +45,6 @@ class UserService:
         f.close
         return s
     def navigate(self,path):
-        print('OLDURL: ', self.oldUrl)
         if(os.path.isfile(path)):
             ext=path.split(".")[1]
             if(ext=="txt"):
@@ -58,12 +52,23 @@ class UserService:
                  
         elif(os.path.isdir(path)):
             self.clear()
-            return self.listContent(path)
+            f=os.popen(f'sudo ls -l {path}|tr -s " " " "|cut -d " " -f9-')
+            liste=[]
+            f.readline()
+            for l in f.readlines():
+                    st=os.stat(f'{path}/{l[0:len(l)-1]}')
+                    taille=str(st.st_size)
+                    jour=datetime.datetime.fromtimestamp(st.st_mtime).day
+                    mois=calendar.month_name[datetime.datetime.fromtimestamp(st.st_mtime).month]
+                    annee=datetime.datetime.fromtimestamp(st.st_mtime).year
+                    time=(str(datetime.datetime.fromtimestamp(st.st_mtime).time()).split('.')[0]).split(':')[:-1]
+                    liste.append((f'{path}/{l[0:len(l)-1]}',l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
+            return liste
         
     def rechercher(self,value):
         return self.infos(f'{self.oldUrl}','-type f',value)
     def infos(self,path,type,value):
-        f=os.popen(f"find {path} {type} -iname '*{value}*'")
+        f=os.popen(f"sudo find {path} {type} -iname '*{value}*'")
         liste=[]
         for l in f.readlines():
             st=os.stat(l[0:len(l)-1])
@@ -76,23 +81,48 @@ class UserService:
             liste.append((l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
         return liste
     def compress_directory(self,directory_path):
-        render_template('chargement.html')
-        f=os.popen(f'zip -r {directory_path}.zip {directory_path}')
-    
+        return render_template('chargement.html')
+        
+        
     def filesCount(self):
-        f=os.popen(f'find {self.oldUrl} -type f | wc -l')
+        f=os.popen(f'sudo find {self.oldUrl} -type f | wc -l')
         for l in f.readlines():
             c=l[0:len(l)-1] 
         return c
     def dirsCount(self):
-        f=os.popen(f'find {self.oldUrl} -type d | wc -l')
+        f=os.popen(f'sudo find {self.oldUrl} -type d | wc -l')
         for l in f.readlines():
             c=l[0:len(l)-1] 
         return c
     def space(self):
-        l=[]
-        f=os.popen(f'du -sh {self.oldUrl}|tr -s " " " " | cut -f1')
+        dic={'K':1,'M':1000,'G':10**6,'T':10**9}
+        f=os.popen(f'sudo df -h {self.oldUrl}|tr -s " " " " |tail -1|cut -d " " -f2')
+        s=[]
         for l in f.readlines():
-            c=l[0:len(l)-1] 
-        
-              
+            t=l[0:len(l)-1] 
+        f=os.popen(f'sudo du -sh {self.oldUrl}|tr -s " " " "|cut -f1')
+        for l in f.readlines():
+            u=l[0:len(l)-1] 
+        s.append(u)
+        s.append(t)
+        uu=u[len(u)-1] 
+        ut=t[len(t)-1] 
+        for k,v in dic.items():
+            if(uu==k):
+                u=float(u[0:len(u)-1].replace(',','.'))* (int(v))
+            if(ut==k):
+                t=float(t[0:len(t)-1].replace(',','.'))* (int(v))
+        donnees = [u, abs(t-u)]
+        etiquettes = ['Espace utilisé', 'Espace restant']
+        couleurs = ['#FFA07A', '#ADD8E6']
+        import matplotlib.pyplot as plt
+        plt.pie(donnees, labels=etiquettes, colors=couleurs, autopct='%1.1f%%')
+        l=len(str(f'{self.oldUrl}').split('/'))
+        plt.title(f"Espace disque pour l'utilisateur courant: {str(self.oldUrl).split('/')[l-1]}")
+        img = io.BytesIO()
+        plt.savefig(img, format='png')
+        plt.close()
+        img.seek(0)
+        img_base64 = base64.b64encode(img.getvalue()).decode()
+        liste=[img_base64,s[0],s[1]]
+        return liste

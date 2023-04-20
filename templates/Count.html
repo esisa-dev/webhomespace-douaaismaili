@@ -2,8 +2,11 @@
 <html>
 
 <center>
-
-    <h1> Votre home directory contient {{ count|safe }}</h1>
-
+    {% if liste %}
+        <h1> La taille de l'espace utilise est de {{ liste[1] }} sur un total de {{ liste[2] }}</h1>
+        <img src="data:image/png;base64,{{ liste[0] }}" />
+    {% else %}
+        <h1> Votre home directory contient {{ count|safe }}</h1>
+    {% endif %}
 </center>
 </html>
