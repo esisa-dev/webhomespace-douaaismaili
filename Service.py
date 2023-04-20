@@ -21,8 +21,8 @@ class UserService:
         else:
             return login + " doesn't exist"
     def clear(self):
-        file1=open('WebHomeSpace/templates/app.html','w')
-        file2=open('WebHomeSpace/templates/appBackup.html','r')
+        file1=open('/home/douaa/github-classroom/esisa-dev/webhomespace-douaaismaili/templates/app.html','w')
+        file2=open('/home/douaa/github-classroom/esisa-dev/webhomespace-douaaismaili/templates/appBackup.html','r')
         contenu=file2.read()
         file2.close()
         file1.write(contenu)
@@ -87,5 +87,3 @@ class UserService:
                 zipf.write(file_path, os.path.relpath(file_path, directory_path))
         zipf.close()
     
-U=UserService('/home/douaa')
-U.compress_directory(U.oldUrl)
