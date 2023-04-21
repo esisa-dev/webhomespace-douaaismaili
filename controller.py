@@ -29,7 +29,6 @@ def index():
 def login():
     login=request.form['login']
     pwd=request.form['password']
-  
     if(service_User.verifyUser(login,pwd))==True:
         app.secret_key=generate_key(login)
         liste=service_User.listContent(f'/home/{login}')
@@ -47,7 +46,10 @@ def login():
 def logout():
     session.pop('user_id',None)
     app.logger.info('Au revoir')
+    service_User.c=False
     return redirect(url_for('index'))
+ 
+    
 @app.route('/home/<path:url>')
 def navigate(url):
     liste=service_User.navigate(f'/home/{url}')
@@ -66,12 +68,7 @@ def chargement():
     return render_template('chargement.html')
 @app.route('/compresser',methods=['GET'])
 def compresser():
-    commande=f'sudo zip -r {service_User.oldUrl}.zip {service_User.oldUrl}'
-    process = subprocess.Popen(commande.split(), stdout=subprocess.PIPE)
-    chargement()
-    while process.poll() is None:
-        s=0
-    output, error = process.communicate()
+    service_User.compress_directory(service_User.oldUrl)
     return render_template('compresser.html')
 @app.route('/files')
 def filesCount():
@@ -92,8 +89,7 @@ def error(exception):
         "ip":request.remote_addr,
         "method":request.method,
         "error" :Exception.__str__()
-        #'sorry im here '
     })
 if __name__=='__main__':
-    service_User=UserService('')
-    app.run(host="0.0.0.0",debug=True)
+    service_User=UserService('',False)
+    app.run(host="0.0.0.0",port=9090,debug=True)

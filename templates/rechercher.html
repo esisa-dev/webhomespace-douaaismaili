@@ -1,37 +1,71 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style1.css">
+</head>
 
 <center>
 
     <h1> Welcome to Your Home Space</h1>
-    <nav>
-
-        <a href="/Files">Files</a> | 
-        <a href="/Dirs">Dirs</a> | 
-        <a href="/Space">Space</a> | 
-        
-        <a href></a>
-        <a href="/logout">Logout</a> | 
-
-    </nav>
+    
+        <nav>
+        <form action="/files">
+            <input type="submit" value="Files"/>
+        </form>    
+        <form action="/dirs">
+            <input type="submit" value="Dirs"/>
+        </form>
+        <form action="/space">
+            <input type="submit" value="Space"/>
+        </form>
+        <form action="/logout">
+            <input type="submit" value="Logout"/>
+        </form>
+        <form  action="/compresser" method="get">
+            <input type="submit" value="Compresser"/>
+            
+        </form>
+        </nav>
     <form  action="/rechercher" method="get">
-        <input type="text" name="recherche" value="{{ value }}"/>
+        <input type="text" name="recherche"/>
         <input type="submit" value="Rechercher"/>
         
     </form>
-    <table>
-    <tr><td>Dossiers</td> <td>Date de modification</td> <td>Taille</td></tr>
-    {% for d in liste %}
-        
-    <tr>
-        <td> <a style="color: blueviolet"; href=" {{ d[0] }} "> {{ d[0] }} </a></td>
-         <td> {{ d[1] }}  {{ d[2] }}  {{ d[3] }} a {{ d[4] }} </td> 
-         <td>            {{ d[5] }} </td>
-    </tr>
 
-    {% endfor %}
-    
-    </table>
+    {% if liste %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="color:white"> Dossiers </th>
+                    <th style="color:rgb(109, 109, 109)"> Date de modification </th>
+                    <th style="color:rgb(109, 109, 109)"> Taille </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for d in liste %}
+                
+            <tr>
+                <td> <a style="color: white"; href=" {{ d[0] }} "> {{ d[0] }} </a></td>
+                <td style="color: rgb(109, 109, 109)";> {{ d[1] }}  {{ d[2] }}  {{ d[3] }} a {{ d[4] }} </td> 
+                <td style="color: rgb(109, 109, 109)";>            {{ d[5] }} </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <h6 style="padding-top: 40px;color: darkgrey;font-family: 'Segoe UI'; font-size: 70px;"> Aucun fichier </h6>
+    {% endif %}
+<ul>
+  
+</ul>
+</center>
+</html>
+
 <ul>
   
 </ul>

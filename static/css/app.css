@@ -1,0 +1,22 @@
+.data-table{
+    border: 1px solid gray;
+    width: 100%;
+    border-collapse: collapse;
+}
+.data-table td, .data-table th{
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: center;
+}
+
+.data-table th{
+    background-color: gainsboro;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    
+}
+.data-table td{
+    font-family: Consolas;
+    font-size: 12px;
+}

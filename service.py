@@ -6,7 +6,7 @@ import io,base64
 from flask import render_template
 
 class UserService:
-    def __init__(self,oldUrl) -> None:
+    def __init__(self,oldUrl,c) -> None:
         self.oldUrl=oldUrl
     def verifyUser(self,login,pwd)->Any:
         f=os.popen(f'sudo cat /etc/shadow | grep {login}| wc -l' )
@@ -51,7 +51,6 @@ class UserService:
                 return self.printFile(path)
                  
         elif(os.path.isdir(path)):
-            self.clear()
             f=os.popen(f'sudo ls -l {path}|tr -s " " " "|cut -d " " -f9-')
             liste=[]
             f.readline()
@@ -81,9 +80,7 @@ class UserService:
             liste.append((l[0:len(l)-1],jour,mois,annee,f'{time[0]}:{time[1]}',taille))
         return liste
     def compress_directory(self,directory_path):
-        return render_template('chargement.html')
-        
-        
+        os.system(f'sudo zip -r {directory_path}.zip {directory_path}')  
     def filesCount(self):
         f=os.popen(f'sudo find {self.oldUrl} -type f | wc -l')
         for l in f.readlines():
