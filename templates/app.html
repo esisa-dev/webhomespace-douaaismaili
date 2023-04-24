@@ -1,41 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/static/css/style1.css">
-</head>
+    <title>Home Space</title>
+    <link rel="stylesheet" href="../static/css/app.css">
+  </head>
+  <body>
+    <div class="header-menu">
+        <div class="logo">
+            <img src="../static/images/user1.png" alt="Profile Picture">
+            <h1>Welcome douaa !</h1>
+        </div>
+        <div class="menu-list">
+          
+                <form  action="/files" method="get">
+                    <input type="submit" name="files" value="  Files"/>
+                    
+                </form>
+                <form  action="/dirs" method="get">
+                    <input type="submit" name="dirs" value="   Dirs"/>
+                    
+                </form>
+                <form  action="/space" method="get">
+                    <input type="submit" name="space" value="    Space"/>
+                    
+                </form>
+                <form  action="/compresser" method="get">
+                    <input type="submit" name="compresser" value=" Compresser"/>
+                    
+                </form>
+                <form  action="/logout" method="get">
+                    <input type="submit" name="logout" value="   Logout"/>
+                    
+                </form>
+                
+        
+        </div>
 
-<center>
-
-    <h1> Welcome to Your Home Space</h1>
-    
-        <nav>
-        <form action="/files">
-            <input type="submit" value="Files"/>
-        </form>    
-        <form action="/dirs">
-            <input type="submit" value="Dirs"/>
-        </form>
-        <form action="/space">
-            <input type="submit" value="Space"/>
-        </form>
-        <form action="/logout">
-            <input type="submit" value="Logout"/>
-        </form>
-        <form  action="/compresser" method="get">
-            <input type="submit" value="Compresser"/>
-            
-        </form>
-        </nav>
-    <form  action="/rechercher" method="get">
-        <input type="text" name="recherche"/>
-        <input type="submit" value="Rechercher"/>
+    </div>
+    <h2>Welcome to Your Home Space</h2>
+    <div class="search">
+      <form  action="/rechercher" method="get">
+        <input type="text" name="recherche" placeholder="Search a file name or extention"/>
+        <input  type="submit" name="r" value="     " />
         
     </form>
-    {% if liste %}
+    </div>
+    <div id="content">
+      {% if liste %}
         <table class="data-table">
             <thead>
                 <tr>
@@ -48,7 +60,13 @@
             {% for d in liste %}
                 
             <tr>
-                <td> <a style="color: white"; href=" {{ d[0] }} "> {{ d[1] }} </a></td>
+                <td> 
+                    <form  action="/navigate" method="get">
+                        <input style="color: transparent;font-size: 0px;background-color: transparent;" type="text" name="navig" value="{{ d[0] }}" />
+                        <input type="submit"value="{{ d[1] }}"/>
+                        
+                    </form></td>
+                <!--<td> <a style="color: white"; href=" {{ d[0] }} "> {{ d[1] }} </a></td>-->
                 <td style="color: rgb(109, 109, 109)";> {{ d[2] }}  {{ d[3] }}  {{ d[4] }} a {{ d[5] }} </td> 
                 <td style="color: rgb(109, 109, 109)";>            {{ d[6] }} </td>
             </tr>
@@ -60,7 +78,7 @@
         <h6 style="padding-top: 40px;color: darkgrey;font-family: 'Segoe UI'; font-size: 70px;"> Aucun Contenu </h6>
     {% endif %}
 <ul>
-  
-</ul>
-</center>
+      </div>
+      
+  </body>
 </html>

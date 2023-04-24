@@ -1,21 +1,23 @@
+<!DOCTYPE html>
 <html>
-
-<center>
-
-<h3 style="color: blue;">Authentication</h3>
-    <form  action="/login" method="post">
-
-        <label>Login</label> <br>
-        <input style="border: 2; border-style: groove; border-color: blue;" type="text" name="login"/><br>
-        <label>password</label><br>
-        <input style="border: 2; border-style: groove; border-color: blue;" type="password" name="password"/>
-        <br><br>
-        <input style="color: green" type="submit" value="Authenticate"/>
-
-    </form>
-    <p style="color: red;">{{error_auth}}</p>
-
-
-</center>
-
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+  </head>
+  <body>
+    <div class="login-box">
+    
+      <img src="../static/images/user3.png"/>
+      <form action="/login" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <br>
+        <input type="submit" value="Login">
+      </form>
+      <p style="color: red;">{{error_auth}}</p>
+    </div>
+  </body>
 </html>
