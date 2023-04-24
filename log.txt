@@ -131,3 +131,7 @@
 2023-04-21 09:53:26,378 INFO controller Bienvenue
 2023-04-21 09:54:07,556 INFO controller Bienvenue
 2023-04-21 09:55:42,515 INFO controller Bienvenue
+2023-04-24 10:24:24,927 INFO controller Bienvenue
+2023-04-24 10:25:06,229 INFO controller Au revoir
+2023-04-24 10:25:10,407 INFO controller Compress_directory
+2023-04-24 10:25:53,959 INFO controller Bienvenue

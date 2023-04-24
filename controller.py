@@ -7,18 +7,18 @@ from flask import(
     url_for,
 
 )
-import logging,os,subprocess
+import logging
 from logging.handlers import RotatingFileHandler
-from datetime import datetime
 from service import UserService
 import hashlib
+import os
 app=Flask(__name__)
-
 app.logger.setLevel(logging.INFO)
 handler=RotatingFileHandler('log.txt')
 handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s'))
 
 app.logger.addHandler(handler)
+
 def generate_key(login):
     return hashlib.md5(str(login).encode('utf-8')).hexdigest()
 app.secret_key='1234'
@@ -27,7 +27,7 @@ def index():
     return render_template('login.html')
 @app.route('/login',methods=['POST'])
 def login():
-    login=request.form['login']
+    login=request.form['username']
     pwd=request.form['password']
     if(service_User.verifyUser(login,pwd))==True:
         app.secret_key=generate_key(login)
@@ -50,13 +50,15 @@ def logout():
     return redirect(url_for('index'))
  
     
-@app.route('/home/<path:url>')
-def navigate(url):
-    liste=service_User.navigate(f'/home/{url}')
-    if(type(liste))==str:
-        return render_template('file.html', liste=liste)
+@app.route('/navigate' ,methods=['GET'])
+def navigate():
+    path=request.args.get('navig')
+    liste=service_User.navigate(path)
+    if(type(liste))!=str:
+        return render_template('app2.html', liste=liste)
     else:
-        return render_template('app.html', liste=liste)
+        filename=path.split('/')[len(path.split('/'))-1]
+        return render_template('file.html', liste=liste,filename=filename)
 
 @app.route('/rechercher',methods=['GET'])
 def rechercher():
@@ -64,11 +66,10 @@ def rechercher():
     liste=service_User.rechercher(value)
     return render_template('rechercher.html', liste=liste,value=value)
 
-def chargement():
-    return render_template('chargement.html')
 @app.route('/compresser',methods=['GET'])
 def compresser():
     service_User.compress_directory(service_User.oldUrl)
+    app.logger.info('Compress_directory')
     return render_template('compresser.html')
 @app.route('/files')
 def filesCount():
