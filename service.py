@@ -3,8 +3,7 @@ import os,spwd,crypt
 import datetime,calendar
 import matplotlib.pyplot as plt
 import io,base64
-from flask import render_template
-
+import matplotlib.pyplot as plt
 class UserService:
     def __init__(self,oldUrl,c) -> None:
         self.oldUrl=oldUrl
@@ -112,7 +111,7 @@ class UserService:
         donnees = [u, abs(t-u)]
         etiquettes = ['Espace utilisé', 'Espace restant']
         couleurs = ['#FFA07A', '#ADD8E6']
-        import matplotlib.pyplot as plt
+        
         plt.pie(donnees, labels=etiquettes, colors=couleurs, autopct='%1.1f%%')
         l=len(str(f'{self.oldUrl}').split('/'))
         plt.title(f"Espace disque pour l'utilisateur courant: {str(self.oldUrl).split('/')[l-1]}")

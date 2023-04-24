@@ -11,7 +11,7 @@ input::placeholder {
       body {
         background-color: #f2f2f2;
         
-        background-image: url('../images/images (6).jpg');
+        background-image: url('../images/back2.jpeg');
         background-repeat: no-repeat;
         background-size: cover;
       }
@@ -36,10 +36,11 @@ input::placeholder {
       label {
         display: block;
         margin-bottom: 10px;
-        color: wheat;
+        color: rgb(22, 13, 13);
       }
       
       input[type="text"]{
+        margin-top: 30px;
         width: 70%;
         text-align: center;
         padding: 10px;
