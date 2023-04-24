@@ -20,35 +20,11 @@ h1
   font-size: 30px;
   margin-top: 5px;
 
-  margin-left: 500px;
 }
 .header >*{
   display: inline-block;
 }
 
-.header input[name="Save"] {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background-image: url('../images/save.png');
-  background-repeat: no-repeat;
-  background-size: 26px;
-  background-position: left;
-  background-position-x: 1px;
-  background-position-y: 7px;
-  font-size: 20px;
- margin-left: 470px;
- background-color: #4CAF50;
-border-radius: 10px;
-border: none;
-color: white;
-padding: 10px 20px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 16px;
-cursor: pointer;
-transition: 0.5s;
-  }
    input[type="text"]{
     width: 100%;
     height: 100%;

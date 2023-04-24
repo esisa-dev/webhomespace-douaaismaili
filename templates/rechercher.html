@@ -60,7 +60,13 @@
             {% for d in liste %}
                 
             <tr>
-                <td> <a style="color: white"; href=" {{ d[0] }} "> {{ d[0] }} </a></td>
+                <td> 
+                    <form  action="/navigate" method="get">
+                        <input style="color: transparent;font-size: 0px;background-color: transparent;" type="text" name="navig" value="{{ d[0] }}" />
+                        <input type="submit"value="{{ d[0] }}"/>
+                        
+                    </form></td>
+                <!--<td> <a style="color: white"; href=" {{ d[0] }} "> {{ d[0] }} </a></td>-->
                 <td style="color: rgb(109, 109, 109)";> {{ d[1] }}  {{ d[2] }}  {{ d[3] }} a {{ d[4] }} </td> 
                 <td style="color: rgb(109, 109, 109)";>            {{ d[5] }} </td>
             </tr>

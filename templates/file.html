@@ -12,16 +12,10 @@
         <div class="header">
 
             <h1>{{ filename }}</h1>
-            <form  action="/save" method="get">
-                <input type="submit" name="Save" value="  Save"/>
-                
-            </form>
+            
         </div>
        
-        <!--<form action="/text" method="get">
-            <input type="text" name="text" value="{{ liste|safe|replace('\n', '<br>') }}"/>
-          </form>
-        -->
+        
         <p>{{ liste|safe}}</p>
     </div>
     
