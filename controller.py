@@ -37,8 +37,8 @@ def login():
         #response.set_cookie('access_time',str(datetime.now()))
         app.logger.info('Bienvenue')
         service_User.oldUrl=f'/home/{login}'
-        print('Login old:', service_User.oldUrl )
-        return render_template('app.html', liste=liste)
+        user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+        return render_template('app.html', liste=liste,user=user)
     else:
         app.logger.error('login or password incorrect')
         return render_template('login.html',error_auth='login or password incorrect')
@@ -55,7 +55,8 @@ def navigate():
     path=request.args.get('navig')
     liste=service_User.navigate(path)
     if(type(liste))!=str:
-        return render_template('app2.html', liste=liste)
+        user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+        return render_template('app2.html', liste=liste,user=user)
     else:
         filename=path.split('/')[len(path.split('/'))-1]
         return render_template('file.html', liste=liste,filename=filename)
@@ -64,25 +65,30 @@ def navigate():
 def rechercher():
     value=request.args.get('recherche')
     liste=service_User.rechercher(value)
-    return render_template('rechercher.html', liste=liste,value=value)
+    user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+    return render_template('rechercher.html', liste=liste,value=value,user=user)
 
 @app.route('/compresser',methods=['GET'])
 def compresser():
     service_User.compress_directory(service_User.oldUrl)
     app.logger.info('Compress_directory')
-    return render_template('compresser.html')
+    user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+    return render_template('compresser.html',user=user)
 @app.route('/files')
 def filesCount():
     count=service_User.filesCount() +' fichiers'
-    return render_template('Count.html', count=count)
+    user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+    return render_template('Count.html', count=count,user=user)
 @app.route('/dirs')
 def dirsCount():
     count=service_User.dirsCount() +' repertoires'
-    return render_template('Count.html', count=count)
+    user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+    return render_template('Count.html', count=count,user=user)
 @app.route('/space')
 def space():
     liste=service_User.space()
-    return render_template('Count.html', liste=liste)
+    user=(service_User.oldUrl).split('/')[len((service_User.oldUrl).split('/'))-1]
+    return render_template('Count.html', liste=liste,user=user)
 @app.errorhandler(Exception)
 def error(exception):
     return render_template('error.html',error=
