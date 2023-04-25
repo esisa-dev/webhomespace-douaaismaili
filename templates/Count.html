@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home Space</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+  </head>
+  <body>
+    <div class="header-menu">
+        <div class="logo">
+            <img src="../static/images/user1.png" alt="Profile Picture">
+            <h1>Welcome {{user}} !</h1>
+        </div>
+        <div class="menu-list">
+          
+                <form  action="/files" method="get">
+                    <input type="submit" name="files" value="  Files"/>
+                    
+                </form>
+                <form  action="/dirs" method="get">
+                    <input type="submit" name="dirs" value="   Dirs"/>
+                    
+                </form>
+                <form  action="/space" method="get">
+                    <input type="submit" name="space" value="    Space"/>
+                    
+                </form>
+                <form  action="/compresser" method="get">
+                    <input type="submit" name="compresser" value=" Compresser"/>
+                    
+                </form>
+                <form  action="/logout" method="get">
+                    <input type="submit" name="logout" value="   Logout"/>
+                    
+                </form>
+                
+        
+        </div>
+
+    </div>
+    
+    <div class="search">
+      <form  action="/rechercher" method="get">
+        <input type="text" name="recherche" placeholder="Search a file name or extention"/>
+        <input  type="submit" name="r" value="     " />
+        
+    </form>
+    </div>
+    <div style="margin-left: 200px;">
+    {% if liste %}
+        <h1> La taille de l'espace utilise est de {{ liste[1] }} sur un total de {{ liste[2] }}</h1>
+        <img style="margin-left: 115px;" src="data:image/png;base64,{{ liste[0] }}" />
+    {% else %}
+        <h2> Votre home directory contient {{ count|safe }}</h2>
+    {% endif %}
+</div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home Space</title>
+    <link rel="stylesheet" href="../static/css/app.css">
+  </head>
+  <body>
+    <div class="header-menu">
+        <div class="logo">
+            <img src="../static/images/user1.png" alt="Profile Picture">
+            <h1>Welcome {{user}} !</h1>
+        </div>
+        <div class="menu-list">
+          
+                <form  action="/files" method="get">
+                    <input type="submit" name="files" value="  Files"/>
+                    
+                </form>
+                <form  action="/dirs" method="get">
+                    <input type="submit" name="dirs" value="   Dirs"/>
+                    
+                </form>
+                <form  action="/space" method="get">
+                    <input type="submit" name="space" value="    Space"/>
+                    
+                </form>
+                <form  action="/compresser" method="get">
+                    <input type="submit" name="compresser" value=" Compresser"/>
+                    
+                </form>
+                <form  action="/logout" method="get">
+                    <input type="submit" name="logout" value="   Logout"/>
+                    
+                </form>
+                
+        
+        </div>
+
+    </div>
+    <h2>Welcome to Your Home Space</h2>
+    <div class="search">
+      <form  action="/rechercher" method="get">
+        <input type="text" name="recherche" placeholder="Search a file name or extention"/>
+        <input  type="submit" name="r" value="     " />
+        
+    </form>
+    </div>
+    <div id="content">
+      {% if liste %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="color:white"> Dossiers </th>
+                    <th style="color:rgb(109, 109, 109)"> Date de modification </th>
+                    <th style="color:rgb(109, 109, 109)"> Taille </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for d in liste %}
+                
+            <tr>
+                <td> 
+                    <form  action="/navigate" method="get">
+                        <input style="color: transparent;font-size: 0px;background-color: transparent;" type="text" name="navig" value="{{ d[0] }}" />
+                        <input type="submit"value="{{ d[1] }}"/>
+                        
+                    </form></td>
+
+                <td style="color: rgb(109, 109, 109)";> {{ d[2] }}  {{ d[3] }}  {{ d[4] }} a {{ d[5] }} </td> 
+                <td style="color: rgb(109, 109, 109)";>            {{ d[6] }} </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <h6 style="padding-top: 40px;color: darkgrey;font-family: 'Segoe UI'; font-size: 70px;"> Aucun Contenu </h6>
+    {% endif %}
+<ul>
+      </div>
+      
+  </body>
+</html>
